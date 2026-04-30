@@ -106,7 +106,7 @@ docker run -d -p 8080:3000 --name daw_lab03_contenedor daw_lab03
 3. Acceder a la aplicación:
 
 ```
-http://localhost:8080/lab03/
+http://127.0.0.1:8080/lab03
 ```
 
 ---
