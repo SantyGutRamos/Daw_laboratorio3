@@ -84,7 +84,7 @@ npm start
 4. Acceder desde el navegador:
 
 ```
-http://localhost:8080/lab03/
+http://127.0.0.1:8080/lab03
 ```
 
 ---
