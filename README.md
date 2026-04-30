@@ -60,8 +60,8 @@ git --version
 Clonar el repositorio:
 
 ```bash
-git clone https://github.com/SantyGutRamos/Daw_laboratorio2
-cd Daw_laboratorio2
+git clone https://github.com/SantyGutRamos/Daw_laboratorio3
+cd Daw_laboratorio3
 ```
 
 Instalar dependencias:
@@ -216,5 +216,5 @@ agenda/
 
 ## URL del video
 ```
-http://127.0.0.1:8080/lab03
+https://www.youtube.com/watch?v=Wuiq-vq8P24
 ```
