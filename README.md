@@ -138,7 +138,7 @@ docker build -t daw_lab03 .
 ### Ejecutar contenedor
 
 ```bash
-docker run -d -p 8080:3000 --name daw_lab03_contenedor daw_lab03
+docker run -d -p 8080:8080 --name daw_lab03_contenedor daw_lab03
 ```
 
 ### Acceder

@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 8080;
 
 app.use('/lab03', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -93,6 +92,6 @@ app.post('/eliminar', (req, res) => {
     res.json({ success: true });
 });
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+app.listen(8080, () => {
+    console.log(`Servidor corriendo en el puerto ${8080}`);
 });
