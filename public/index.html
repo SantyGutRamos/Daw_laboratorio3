@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agenda Lab 03</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="card form-side">
+        <h2 id="title">Nuevo Evento</h2>
+        <form id="form-agenda">
+            <input type="hidden" name="oldFecha" id="oldFecha">
+            <input type="hidden" name="oldHora" id="oldHora">
+
+            <label>Fecha</label>
+            <input type="date" name="fecha" id="fecha" required>
+
+            <label>Hora</label>
+            <input type="time" name="hora" id="hora" required>
+
+            <label>Descripción</label>
+            <textarea name="descripcion" id="descripcion" rows="5" required></textarea>
+
+            <button type="button" class="btn-save" id="btn-submit" onclick="enviarFormulario()">Guardar Evento</button>
+            <button type="button" class="btn-cancel" id="btn-cancel" onclick="resetForm()">Cancelar</button>
+        </form>
+    </div>
+
+    <div class="card list-side">
+        <h2>Eventos Programados</h2>
+        <div id="lista-eventos"></div>
+    </div>
+</div>
+
+<script src="agenda.js">
+
+</script>
+</body>
+</html>
