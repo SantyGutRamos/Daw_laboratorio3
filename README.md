@@ -213,3 +213,8 @@ agenda/
 - No se utiliza base de datos
 - La persistencia se realiza mediante archivos
 - El sistema es portable mediante Docker
+
+## URL del video
+```
+http://127.0.0.1:8080/lab03
+```

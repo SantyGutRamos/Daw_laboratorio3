@@ -3,14 +3,12 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
-// Servir la carpeta pública bajo la ruta /lab03
 app.use('/lab03', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Redirección de la raíz al subdirectorio del laboratorio
 app.get('/', (req, res) => {
     res.redirect('/lab03/');
 });
