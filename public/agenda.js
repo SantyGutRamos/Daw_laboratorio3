@@ -72,7 +72,7 @@ function renderizarLista() {
             htmlEventos += `
                 <div class="evento-item">
                     <div>
-                        <span>add Hora: <strong>${ev.hora}</strong></span>
+                        <span>Hora: <strong>${ev.hora}</strong></span>
                         <p style="margin: 5px 0 0 0; color:#444;">${ev.descripcion}</p>
                     </div>
                     <div>
