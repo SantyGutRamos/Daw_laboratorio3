@@ -5,15 +5,10 @@ const fs = require('fs');
 const app = express();
 const PORT = 3000;
 
-// Configuración de Middlewares
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/**
- * RUTA: Guardar o Actualizar Evento
- * Si recibe oldFecha y oldHora, elimina el archivo anterior para evitar duplicados.
- */
 app.post('/guardar', (req, res) => {
     const { fecha, hora, descripcion, oldFecha, oldHora } = req.body;
 
@@ -21,7 +16,6 @@ app.post('/guardar', (req, res) => {
         return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
-    // 1. Lógica de Edición: Borrar archivo antiguo si cambió de fecha/hora
     if (oldFecha && oldHora) {
         const oldFolderName = oldFecha.replace(/-/g, '.');
         const oldFileName = `${oldHora.replace(':', '.')}.md`;
@@ -29,7 +23,6 @@ app.post('/guardar', (req, res) => {
 
         if (fs.existsSync(oldPath)) {
             fs.unlinkSync(oldPath);
-            // Limpiar directorio si está vacío
             const oldDir = path.dirname(oldPath);
             if (fs.readdirSync(oldDir).length === 0) {
                 fs.rmdirSync(oldDir);
@@ -37,7 +30,6 @@ app.post('/guardar', (req, res) => {
         }
     }
 
-    // 2. Guardar o sobrescribir el nuevo evento
     const folderName = fecha.replace(/-/g, '.');
     const folderPath = path.join(__dirname, 'agenda', folderName);
 
@@ -48,16 +40,12 @@ app.post('/guardar', (req, res) => {
     const fileName = `${hora.replace(':', '.')}.md`;
     const filePath = path.join(folderPath, fileName);
 
-    // Guardar en formato estructurado (Markdown)
     const contenidoMarkdown = `# Evento - ${hora}\n\n**Descripción:**\n${descripcion}`;
     fs.writeFileSync(filePath, contenidoMarkdown, 'utf8');
 
     res.status(200).json({ success: true });
 });
 
-/**
- * RUTA: Listar Eventos
- */
 app.get('/listar-eventos', (req, res) => {
     const agendaPath = path.join(__dirname, 'agenda');
     if (!fs.existsSync(agendaPath)) return res.json([]);
@@ -72,7 +60,6 @@ app.get('/listar-eventos', (req, res) => {
             archivos.forEach(file => {
                 const contenidoCompleto = fs.readFileSync(path.join(fullPath, file), 'utf8');
                 
-                // Corrección: Leemos correctamente contenidoCompleto y extraemos la descripción
                 const descripcion = contenidoCompleto ? (contenidoCompleto.split('\n\n**Descripción:**\n')[1] || contenidoCompleto) : '';
 
                 eventos.push({
@@ -87,9 +74,6 @@ app.get('/listar-eventos', (req, res) => {
     res.json(eventos);
 });
 
-/**
- * RUTA: Eliminar Evento
- */
 app.post('/eliminar', (req, res) => {
     const { fecha, hora } = req.body;
     const folderName = fecha.replace(/-/g, '.');

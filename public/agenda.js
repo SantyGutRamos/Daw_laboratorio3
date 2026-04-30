@@ -1,5 +1,5 @@
 let eventosGlobales = [];
-let fechaMostrada = new Date(); // Mes actual del calendario
+let fechaMostrada = new Date();
 
 async function enviarFormulario() {
     const data = {
@@ -63,7 +63,7 @@ function renderizarLista() {
 
         let htmlEventos = `
             <div class="dia-header">
-                <strong>📅 Fecha: ${fecha}</strong>
+                <strong> Fecha: ${fecha}</strong>
             </div>
             <div class="dia-cuerpo">
         `;
@@ -72,7 +72,7 @@ function renderizarLista() {
             htmlEventos += `
                 <div class="evento-item">
                     <div>
-                        <span>⏰ Hora: <strong>${ev.hora}</strong></span>
+                        <span> Hora: <strong>${ev.hora}</strong></span>
                         <p style="margin: 5px 0 0 0; color:#444;">${ev.descripcion}</p>
                     </div>
                     <div>
@@ -98,7 +98,6 @@ function renderizarCalendario() {
 
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     
-    // Obtener mes y año según la variable global
     let mes = fechaMostrada.getMonth();
     let anio = fechaMostrada.getFullYear();
     
@@ -111,7 +110,6 @@ function renderizarCalendario() {
         <div class="calendario-grid">
     `;
 
-    // Obtener la cantidad de días del mes actual
     const diasEnMes = new Date(anio, mes + 1, 0).getDate();
 
     for (let i = 1; i <= diasEnMes; i++) {
