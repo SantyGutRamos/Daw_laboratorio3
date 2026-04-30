@@ -1,93 +1,144 @@
-Sistema de Agenda Personal - Laboratorio 03
+# Agenda de Eventos - Laboratorio 03
 
-Aplicación web backend desarrollada con Node.js y Express que permite gestionar una agenda personal mediante la creación, lectura, edición y eliminación de eventos, utilizando el sistema de archivos local como mecanismo de persistencia.
+Aplicación web desarrollada con Node.js y Express que permite gestionar una agenda de eventos personales, organizándolos y almacenándolos de forma persistente en el sistema de archivos del servidor.
 
-Descripción del Proyecto
+---
 
-Este proyecto implementa una aplicación web que permite registrar y visualizar eventos organizados por fecha y hora. Los datos se almacenan en archivos Markdown (.md) dentro de una estructura jerárquica de carpetas.
+## Contenido
 
-El sistema cumple con los requerimientos del laboratorio, haciendo uso de:
+- [Descripción del Proyecto](#descripción-del-proyecto)
+- [Características](#características)
+- [Requisitos Previos](#requisitos-previos)
+- [Instalación y Ejecución Local](#instalación-y-ejecución-local)
+- [Despliegue con Docker](#despliegue-con-docker)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Funcionamiento del Sistema](#funcionamiento-del-sistema)
+- [Entregables](#entregables)
+- [Cuestionario](#cuestionario)
 
-Node.js como entorno de ejecución
-Express para la gestión del servidor y rutas
-Módulo fs para la manipulación del sistema de archivos
-Métodos HTTP (GET y POST) para la interacción cliente-servidor
+---
 
-La aplicación es accesible desde el navegador en una única interfaz.
+## Descripción del Proyecto
 
-Características
-Gestión completa de eventos:
-Crear eventos
-Listar eventos
-Editar eventos
-Eliminar eventos
-Persistencia en archivos Markdown (.md)
+Este sistema implementa una aplicación web que permite la gestión de una agenda personal mediante una única interfaz accesible desde el navegador.
 
-Organización jerárquica de datos:
+El backend, desarrollado con Node.js y Express, procesa las solicitudes del cliente y gestiona la información utilizando el sistema de archivos local. Los eventos se almacenan en archivos Markdown (`.md`), organizados jerárquicamente por fecha y hora.
 
-agenda/
-├── YYYY.MM.DD/
-    ├── HH.MM.md
-Uso de rutas HTTP:
-GET → Visualización de la agenda
-POST → Registro y modificación de eventos
-Interfaz web accesible desde navegador
-Requisitos Previos
+---
 
-Asegúrate de tener instalado:
+## Características
 
-Node.js (versión 18 o superior)
-Docker
-Git
+- Gestión completa de eventos: creación, lectura, edición y eliminación.
+- Uso de métodos HTTP (GET y POST).
+- Persistencia mediante el sistema de archivos (`fs`).
+- Almacenamiento en formato Markdown (`.md`).
+- Organización jerárquica por fecha.
+- Interfaz web accesible desde navegador.
+- Despliegue con Docker.
 
-Verificar instalación:
+---
 
+## Requisitos Previos
+
+- Node.js (versión 18 o superior recomendada)
+- npm
+- Docker (opcional)
+
+Verificación:
+
+```bash
 node -v
 npm -v
 docker -v
-git --version
-Instalación y Ejecución Local
-Clonar el repositorio:
+```
+
+---
+
+## Instalación y Ejecución Local
+
+1. Clonar el repositorio:
+
+```bash
 git clone https://github.com/SantyGutRamos/Daw_laboratorio2
 cd Daw_laboratorio2
-Instalar dependencias:
+```
+
+2. Instalar dependencias:
+
+```bash
 npm install
-Ejecutar la aplicación:
+```
+
+3. Ejecutar la aplicación:
+
+```bash
 node app.js
+```
 
-O usando script:
+O:
 
+```bash
 npm start
-Acceder desde el navegador:
-http://127.0.0.1:8080/lab03/
+```
 
-o
+4. Acceder desde el navegador:
 
+```
 http://localhost:8080/lab03/
-Despliegue con Docker
-1. Construcción de la imagen
+```
+
+---
+
+## Despliegue con Docker
+
+1. Construir la imagen:
+
+```bash
 docker build -t daw_lab03 .
-2. Ejecución del contenedor
+```
+
+2. Ejecutar el contenedor:
+
+```bash
 docker run -d -p 8080:3000 --name daw_lab03_contenedor daw_lab03
-3. Acceso a la aplicación
+```
 
-Abrir en navegador:
+3. Acceder a la aplicación:
 
+```
 http://localhost:8080/lab03/
-Estructura del Proyecto
+```
+
+---
+
+## Estructura del Proyecto
+
+```
 lab03/
-├── agenda/              # Almacenamiento de eventos en archivos Markdown
-├── public/              # Archivos estáticos (HTML, CSS, JS)
-├── app.js               # Servidor principal (Node.js + Express)
-├── Dockerfile           # Configuración de contenedor
-├── package.json         # Dependencias del proyecto
-└── README.md            # Documentación
-Funcionamiento del Sistema
-Los eventos se almacenan en archivos .md
-Cada carpeta representa una fecha (YYYY.MM.DD)
-Cada archivo representa un evento con su hora (HH.MM.md)
-El servidor:
-Crea carpetas automáticamente si no existen
-Guarda archivos con contenido del evento
-Lee directorios para listar eventos
-Permite modificar y eliminar archivos
+├── agenda/
+├── public/
+├── app.js
+├── Dockerfile
+├── package.json
+└── README.md
+```
+
+---
+
+## Funcionamiento del Sistema
+
+Estructura de almacenamiento:
+
+```
+agenda/
+└── YYYY.MM.DD/
+    ├── HH.MM.md
+```
+
+- Cada carpeta representa una fecha.
+- Cada archivo representa un evento.
+- El sistema crea automáticamente directorios y archivos.
+- Permite leer, editar y eliminar eventos.
+
+---
+
