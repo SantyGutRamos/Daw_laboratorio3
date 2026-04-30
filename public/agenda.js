@@ -63,7 +63,7 @@ function renderizarLista() {
 
         let htmlEventos = `
             <div class="dia-header">
-                <strong> Fecha: ${fecha}</strong>
+                <strong>📅 Fecha: ${fecha}</strong>
             </div>
             <div class="dia-cuerpo">
         `;
@@ -72,7 +72,7 @@ function renderizarLista() {
             htmlEventos += `
                 <div class="evento-item">
                     <div>
-                        <span> Hora: <strong>${ev.hora}</strong></span>
+                        <span>⏰ Hora: <strong>${ev.hora}</strong></span>
                         <p style="margin: 5px 0 0 0; color:#444;">${ev.descripcion}</p>
                     </div>
                     <div>
@@ -115,7 +115,7 @@ function renderizarCalendario() {
     for (let i = 1; i <= diasEnMes; i++) {
         const diaStr = i < 10 ? `0${i}` : `${i}`;
         const mesStr = (mes + 1) < 10 ? `0${mes + 1}` : `${mes + 1}`;
-        const fechaMes = `${anio}-${mesStr}-${diaStr}`;
+        const fechaMes = `${anio}-${mesStr}-${constStr}`;
 
         const eventosDelDia = eventosGlobales.filter(e => e.fecha === fechaMes);
         let claseDia = "cal-dia";

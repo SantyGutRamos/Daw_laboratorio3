@@ -5,9 +5,15 @@ const fs = require('fs');
 const app = express();
 const PORT = 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
+// Servir la carpeta pública bajo la ruta /lab03
+app.use('/lab03', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Redirección de la raíz al subdirectorio del laboratorio
+app.get('/', (req, res) => {
+    res.redirect('/lab03/');
+});
 
 app.post('/guardar', (req, res) => {
     const { fecha, hora, descripcion, oldFecha, oldHora } = req.body;
@@ -59,7 +65,6 @@ app.get('/listar-eventos', (req, res) => {
             const archivos = fs.readdirSync(fullPath);
             archivos.forEach(file => {
                 const contenidoCompleto = fs.readFileSync(path.join(fullPath, file), 'utf8');
-                
                 const descripcion = contenidoCompleto ? (contenidoCompleto.split('\n\n**Descripción:**\n')[1] || contenidoCompleto) : '';
 
                 eventos.push({
@@ -91,5 +96,5 @@ app.post('/eliminar', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
