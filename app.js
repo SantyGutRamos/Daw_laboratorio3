@@ -5,19 +5,23 @@ const fs = require('fs');
 const app = express();
 const PORT = 3000;
 
-// Middlewares
+// Configuración de Middlewares
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /**
  * RUTA: Guardar o Actualizar Evento
- * Si recibe oldFecha y oldHora, elimina el archivo anterior antes de crear el nuevo.
+ * Si recibe oldFecha y oldHora, elimina el archivo anterior para evitar duplicados.
  */
 app.post('/guardar', (req, res) => {
     const { fecha, hora, descripcion, oldFecha, oldHora } = req.body;
 
-    // LÓGICA DE EDICIÓN: Evitar duplicados
+    if (!fecha || !hora || !descripcion) {
+        return res.status(400).json({ error: "Todos los campos son obligatorios" });
+    }
+
+    // 1. Lógica de Edición: Borrar archivo antiguo si cambió de fecha/hora
     if (oldFecha && oldHora) {
         const oldFolderName = oldFecha.replace(/-/g, '.');
         const oldFileName = `${oldHora.replace(':', '.')}.md`;
@@ -25,7 +29,7 @@ app.post('/guardar', (req, res) => {
 
         if (fs.existsSync(oldPath)) {
             fs.unlinkSync(oldPath);
-            // Si la carpeta quedó vacía, la eliminamos
+            // Limpiar directorio si está vacío
             const oldDir = path.dirname(oldPath);
             if (fs.readdirSync(oldDir).length === 0) {
                 fs.rmdirSync(oldDir);
@@ -33,10 +37,10 @@ app.post('/guardar', (req, res) => {
         }
     }
 
-    // GUARDAR NUEVO (O ACTUALIZADO)
+    // 2. Guardar o sobrescribir el nuevo evento
     const folderName = fecha.replace(/-/g, '.');
     const folderPath = path.join(__dirname, 'agenda', folderName);
-    
+
     if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath, { recursive: true });
     }
@@ -44,13 +48,15 @@ app.post('/guardar', (req, res) => {
     const fileName = `${hora.replace(':', '.')}.md`;
     const filePath = path.join(folderPath, fileName);
 
-    fs.writeFileSync(filePath, descripcion, 'utf8');
-    
+    // Guardar en formato estructurado (Markdown)
+    const contenidoMarkdown = `# Evento - ${hora}\n\n**Descripción:**\n${descripcion}`;
+    fs.writeFileSync(filePath, contenidoMarkdown, 'utf8');
+
     res.status(200).json({ success: true });
 });
 
 /**
- * RUTA: Listar Eventos para el Frontend
+ * RUTA: Listar Eventos
  */
 app.get('/listar-eventos', (req, res) => {
     const agendaPath = path.join(__dirname, 'agenda');
@@ -64,15 +70,20 @@ app.get('/listar-eventos', (req, res) => {
         if (fs.lstatSync(fullPath).isDirectory()) {
             const archivos = fs.readdirSync(fullPath);
             archivos.forEach(file => {
-                const contenido = fs.readFileSync(path.join(fullPath, file), 'utf8');
+                const contenidoCompleto = fs.readFileSync(path.join(fullPath, file), 'utf8');
+                
+                // Corrección: Leemos correctamente contenidoCompleto y extraemos la descripción
+                const descripcion = contenidoCompleto ? (contenidoCompleto.split('\n\n**Descripción:**\n')[1] || contenidoCompleto) : '';
+
                 eventos.push({
                     fecha: folder.replace(/\./g, '-'),
                     hora: file.replace('.md', '').replace('.', ':'),
-                    descripcion: contenido
+                    descripcion: descripcion.trim()
                 });
             });
         }
     });
+
     res.json(eventos);
 });
 
@@ -81,7 +92,9 @@ app.get('/listar-eventos', (req, res) => {
  */
 app.post('/eliminar', (req, res) => {
     const { fecha, hora } = req.body;
-    const filePath = path.join(__dirname, 'agenda', fecha.replace(/-/g, '.'), `${hora.replace(':', '.')}.md`);
+    const folderName = fecha.replace(/-/g, '.');
+    const fileName = `${hora.replace(':', '.')}.md`;
+    const filePath = path.join(__dirname, 'agenda', folderName, fileName);
 
     if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
@@ -93,4 +106,6 @@ app.post('/eliminar', (req, res) => {
     res.json({ success: true });
 });
 
-app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
