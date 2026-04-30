@@ -115,7 +115,7 @@ function renderizarCalendario() {
     for (let i = 1; i <= diasEnMes; i++) {
         const diaStr = i < 10 ? `0${i}` : `${i}`;
         const mesStr = (mes + 1) < 10 ? `0${mes + 1}` : `${mes + 1}`;
-        const fechaMes = `${anio}-${mesStr}-${constStr}`;
+        const fechaMes = `${anio}-${mesStr}-${diaStr}`;
 
         const eventosDelDia = eventosGlobales.filter(e => e.fecha === fechaMes);
         let claseDia = "cal-dia";

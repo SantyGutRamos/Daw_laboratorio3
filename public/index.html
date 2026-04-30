@@ -27,13 +27,14 @@
             <button type="button" class="btn-save" id="btn-submit" onclick="enviarFormulario()">Guardar Evento</button>
             <button type="button" class="btn-cancel" id="btn-cancel" onclick="resetForm()">Cancelar</button>
         </form>
+        <br><br>
+        <div class="view-selector">
+            <button id="btn-vista-lista" class="view-btn active" onclick="cambiarVista('lista')">Vista Lista</button>
+            <button id="btn-vista-estructura" class="view-btn" onclick="cambiarVista('estructura')">Vista Estructura</button>
+        </div>
     </div>
 
     <div class="card list-side">
-        <div class="view-selector">
-            <button id="btn-vista-lista" class="view-btn active" onclick="cambiarVista('lista')">📋 Vista Lista</button>
-            <button id="btn-vista-estructura" class="view-btn" onclick="cambiarVista('estructura')">🗓️ Vista Estructura</button>
-        </div>
 
         <div id="vista-lista" class="view-content">
             <h2>Eventos Programados</h2>
