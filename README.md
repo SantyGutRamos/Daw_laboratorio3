@@ -60,7 +60,7 @@ git --version
 Clonar el repositorio:
 
 ```bash
-git clone https://github.com/SantyGutRamos/Daw_laboratorio3
+git clone https://github.com/SantyGutRamos/Daw_laboratorio3.git
 cd Daw_laboratorio3
 ```
 
